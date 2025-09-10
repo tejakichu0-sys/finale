@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Food Redistribution Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    form input, form select {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    form button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .status-pending {
+      color: orange;
+    }
+
+    .status-distributed {
+      color: green;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      margin-top: 20px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Food Redistribution Dashboard</h1>
+    <p>Connecting restaurants with people in need</p>
+  </header>
+
+  <div class="container">
+    <h2>Add New Food Donation</h2>
+    <form id="donationForm">
+      <input type="text" id="restaurantName" placeholder="Restaurant Name" required />
+      <input type="text" id="foodDetails" placeholder="Food Details (e.g., Rice, Bread, etc.)" required />
+      <input type="number" id="quantity" placeholder="Quantity (in packs)" required />
+      <input type="text" id="location" placeholder="Pickup Location" required />
+      <select id="status">
+        <option value="Pending">Pending</option>
+        <option value="Distributed">Distributed</option>
+      </select>
+      <button type="submit">Add Donation</button>
+    </form>
+
+    <h2>Current Food Donations</h2>
+    <table id="donationTable">
+      <thead>
+        <tr>
+          <th>Restaurant</th>
+          <th>Food</th>
+          <th>Quantity</th>
+          <th>Location</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Donations will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    &copy; 2025 FoodShare Team | Compassion in Action
+  </footer>
+
+  <script>
+    const form = document.getElementById('donationForm');
+    const tableBody = document.querySelector('#donationTable tbody');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const restaurant = document.getElementById('restaurantName').value;
+      const food = document.getElementById('foodDetails').value;
+      const quantity = document.getElementById('quantity').value;
+      const location = document.getElementById('location').value;
+      const status = document.getElementById('status').value;
+
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+        <td>${restaurant}</td>
+        <td>${food}</td>
+        <td>${quantity}</td>
+        <td>${location}</td>
+        <td class="${status === 'Pending' ? 'status-pending' : 'status-distributed'}">${status}</td>
+      `;
+
+      tableBody.appendChild(row);
+      form.reset();
+    });
+  </script>
+</body>
+</html>
